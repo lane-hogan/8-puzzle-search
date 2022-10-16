@@ -93,10 +93,10 @@ class InformedSearchSolver:
             temp = temp_state1[row - 1, col]
             temp_state1[row - 1, col] = temp_state1[row, col]
             temp_state1[row, col] = temp
-            ret = check_inclusive(temp_state1)
+            ret = self.check_inclusive(temp_state1)
             if ret == 1:
                 temp_state1.depth = self.depth
-                temp_state1.weight = heuristic_test(temp_state1)
+                temp_state1.weight = self.heuristic_test(temp_state1)
                 self.openlist.append(temp_state1)
 
             """
@@ -125,10 +125,52 @@ class InformedSearchSolver:
             """
 
         ### ↓(move down) action ###
+        if (row + 1) < 2:
+            temp_state2 = State()
+            temp_state2.tile_seq = walk_state.tile_seq
+            """
+
+            """
+            temp = temp_state2[row + 1, col]
+            temp_state2[row + 1, col] = temp_state2[row, col]
+            temp_state2[row, col] = temp
+            ret = self.check_inclusive(temp_state2)
+            if ret == 1:
+                temp_state2.depth = self.depth
+                temp_state2.weight = self.heuristic_test(temp_state2)
+                self.openlist.append(temp_state2)
 
         ### ←(move left) action ###
+        if (col - 1) >= 0:
+            temp_state3 = State()
+            temp_state3.tile_seq = walk_state.tile_seq
+            """
+
+            """
+            temp = temp_state3[row, col - 1]
+            temp_state3[row, col - 1] = temp_state3[row, col]
+            temp_state3[row, col] = temp
+            ret = self.check_inclusive(temp_state3)
+            if ret == 1:
+                temp_state3.depth = self.depth
+                temp_state3.weight = self.heuristic_test(temp_state3)
+                self.openlist.append(temp_state3)
 
         ### →(move right) action ###
+        if (col + 1) < 2:
+            temp_state4 = State()
+            temp_state4.tile_seq = walk_state.tile_seq
+            """
+
+            """
+            temp = temp_state4[row, col + 1]
+            temp_state4[row, col + 1] = temp_state4[row, col]
+            temp_state4[row, col] = temp
+            ret = self.check_inclusive(temp_state4)
+            if ret == 1:
+                temp_state4.depth = self.depth
+                temp_state4.weight = self.heuristic_test(temp_state4)
+                self.openlist.append(temp_state4)
 
         # sort the open list first by h(n) then g(n)
         # Set the next current state
