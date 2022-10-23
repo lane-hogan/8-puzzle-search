@@ -150,4 +150,3 @@ class UninformedSearchSolver:
                 current_str = np.array2string(currentTiles, precision=2, separator=" ")
                 print(current_str[1:-1])
                 path += 1       # path iterator
-
