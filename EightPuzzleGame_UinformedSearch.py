@@ -1,9 +1,11 @@
+import time
 import numpy as np
 from EightPuzzleGame_State import State
 
 """
 This class implement one of the Uninformed Search algorithm
 You may choose to implement the Breadth-first or Depth-first or Iterative-Deepening search algorithm
+This class implements the Breadth-first search algorithm.
 
 python list insert (index,item), append (item), extend (anotherList), remove (item), pop (index)
 
@@ -77,8 +79,7 @@ class UninformedSearchSolver:
             ret = self.check_inclusive(state1)
             if ret != 1:
                 self.openlist.append(state1)
-                # add to the left of openlist - depth first search
-                # self.openlist.insert(0, temp_state1)
+
         ### ↓(move down) action ###
         temp_state2 = walk_state.copy()
         if (row + 1) <= 2:
@@ -114,32 +115,38 @@ class UninformedSearchSolver:
 
         # TODO your code end here
 
-    # # You can change the following code to print all the states on the search path
     def run(self):
+        print("\nUniformed Search Using Breadth First Search Method")
         # output the goal state
         target = self.goal.tile_seq
-        print("\nReached goal state: ")
+        print("Reached goal state: ")
         target_str = np.array2string(target, precision=2, separator=" ")
         print(target_str[1:-1])
 
         # breadth first search
         print("\n The visited states are: ")
+        path = 0    # keeps track of the number of iterations.
+
+        t0 = time.time()  # gets starting time
 
         while len(self.openlist) != 0:
             # First you need to remove the current node from the open array and move it to the closed array
             self.current = self.openlist.pop(0)
             self.closed.append(self.current)
 
-            currentTiles = self.current.tile_seq
-            current_str = np.array2string(currentTiles, precision=2, separator=" ")
-            print(current_str[1:-1])
-
+            # Checks if goal state is reached
             if self.current.equals(self.goal):
+                print("goal state !!!!!")
+                print("It took ", path, " iterations to reach to the goal state")
+                t1 = time.time()            # gets ending time
+                computationalTime = t1 - t0  # Calculates the time taken to solve puzzle
+                print("Uniformed search computational time: ", computationalTime)
                 return "success"
+            # Runs if the goal state is not reached.
             else:
                 self.state_walk()  # generate the children
+                # gets current and prints it out (This will end up printing all the states on the search path)
                 currentTiles = self.current.tile_seq
                 current_str = np.array2string(currentTiles, precision=2, separator=" ")
                 print(current_str[1:-1])
-
-
+                path += 1       # path iterator
