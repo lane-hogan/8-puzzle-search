@@ -125,7 +125,7 @@ class UninformedSearchSolver:
 
         # breadth first search
         print("\n The visited states are: ")
-        path = 0    # keeps track of the number of iterations.
+        path = 0  # keeps track of the number of iterations.
 
         t0 = time.time()  # gets starting time
 
@@ -138,7 +138,7 @@ class UninformedSearchSolver:
             if self.current.equals(self.goal):
                 print("goal state !!!!!")
                 print("It took ", path, " iterations to reach to the goal state")
-                t1 = time.time()            # gets ending time
+                t1 = time.time()  # gets ending time
                 computationalTime = t1 - t0  # Calculates the time taken to solve puzzle
                 print("Uniformed search computational time: ", computationalTime)
                 return "success"
@@ -149,4 +149,4 @@ class UninformedSearchSolver:
                 currentTiles = self.current.tile_seq
                 current_str = np.array2string(currentTiles, precision=2, separator=" ")
                 print(current_str[1:-1])
-                path += 1       # path iterator
+                path += 1  # path iterator

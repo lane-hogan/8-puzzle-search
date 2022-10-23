@@ -94,16 +94,13 @@ class InformedSearchSolver:
             temp_state1[row, col] = temp
             state1 = State(temp_state1)
             ret = self.check_inclusive(state1)
-            if ret == 1:        # the child is not in open or closed
+            if ret == 1:  # the child is not in open or closed
                 state1.depth = self.depth
                 state1.weight = self.heuristic_test(state1)
                 self.openlist.append(state1)
             # elif ret == 2:      # the child is already in open
             #     for x, item in enumerate(self.openlist):
             #         if state1 < self.openlist[x]:
-
-
-
 
             """
              *get the 2d array of current 
@@ -138,7 +135,7 @@ class InformedSearchSolver:
             temp_state2[row, col] = temp
             state2 = State(temp_state2)
             ret = self.check_inclusive(state2)
-            if ret == 1:            # the child is not in open or closed
+            if ret == 1:  # the child is not in open or closed
                 state2.depth = self.depth
                 state2.weight = self.heuristic_test(state2)
                 self.openlist.append(state2)
@@ -151,7 +148,7 @@ class InformedSearchSolver:
             temp_state3[row, col] = temp
             state3 = State(temp_state3)
             ret = self.check_inclusive(state3)
-            if ret == 1:            # the child is not in open or closed
+            if ret == 1:  # the child is not in open or closed
                 state3.depth = self.depth
                 state3.weight = self.heuristic_test(state3)
                 self.openlist.append(state3)
@@ -164,7 +161,7 @@ class InformedSearchSolver:
             temp_state4[row, col] = temp
             state4 = State(temp_state4)
             ret = self.check_inclusive(state4)
-            if ret == 1:            # the child is not in open or closed
+            if ret == 1:  # the child is not in open or closed
                 state4.depth = self.depth
                 state4.weight = self.heuristic_test(state4)
                 self.openlist.append(state4)
@@ -254,7 +251,7 @@ class InformedSearchSolver:
         self.closed.append(self.current)
 
         while not self.openlist:
-        # while len(self.openlist) != 0:
+            # while len(self.openlist) != 0:
             if self.current.equals(self.goal):
                 print("Reached Goalllllllll")
                 pass
