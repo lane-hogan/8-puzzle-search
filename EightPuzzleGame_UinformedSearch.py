@@ -34,11 +34,10 @@ class UninformedSearchSolver:
         # TODO your code start here
         if s in self.openlist:
             ret = 1
-        print("inside check_inclusive")
 
         if s in self.closed:
-            print("inside check_inclusive")
             ret = 1
+
         # TODO your code end here
         return ret
 
@@ -68,48 +67,50 @@ class UninformedSearchSolver:
         # TODO your code start here
         ### ↑(move up) action ###
         # (row - 1) is checked to prevent out of bounds errors, the tile is swapped with the one above it
-        temp_state1 = walk_state
+        temp_state1 = walk_state.copy()
         if (row - 1) >= 0:
             """ """
             temp = temp_state1[row - 1, col]
             temp_state1[row - 1, col] = temp_state1[row, col]
             temp_state1[row, col] = temp
-            ret = self.check_inclusive(temp_state1)
+            state1 = State(temp_state1)
+            ret = self.check_inclusive(state1)
             if ret != 1:
-                self.openlist.append(temp_state1)
+                self.openlist.append(state1)
                 # add to the left of openlist - depth first search
-                self.openlist.insert(0, temp_state1)
+                # self.openlist.insert(0, temp_state1)
         ### ↓(move down) action ###
-        temp_state2 = walk_state
-        if (row + 1) < 2:
+        temp_state2 = walk_state.copy()
+        if (row + 1) <= 2:
             temp = temp_state2[row + 1, col]
             temp_state2[row + 1, col] = temp_state2[row, col]
             temp_state2[row, col] = temp
-            ret = self.check_inclusive(temp_state2)
+            state2 = State(temp_state2)
+            ret = self.check_inclusive(state2)
             if ret != 1:
-                self.openlist.append(temp_state2)
+                self.openlist.append(state2)
 
         ### ←(move left) action ###
-        temp_state3 = walk_state
+        temp_state3 = walk_state.copy()
         if (col - 1) >= 0:
             temp = temp_state3[row, col - 1]
             temp_state3[row, col - 1] = temp_state3[row, col]
             temp_state3[row, col] = temp
-            ret = self.check_inclusive(temp_state3)
+            state3 = State(temp_state3)
+            ret = self.check_inclusive(state3)
             if ret != 1:
-                self.openlist.append(temp_state3)
+                self.openlist.append(state3)
 
         ### →(move right) action ###
-        temp_state4 = walk_state
-        if (col + 1) < 2:
+        temp_state4 = walk_state.copy()
+        if (col + 1) <= 2:
             temp = temp_state4[row, col + 1]
             temp_state4[row, col + 1] = temp_state4[row, col]
             temp_state4[row, col] = temp
-            ret = self.check_inclusive(temp_state4)
+            state4 = State(temp_state4)
+            ret = self.check_inclusive(state4)
             if ret != 1:
-                self.openlist.append(temp_state4)
-
-        # Set the next current state
+                self.openlist.append(state4)
 
         # TODO your code end here
 
@@ -124,14 +125,10 @@ class UninformedSearchSolver:
         # breadth first search
         print("\n The visited states are: ")
 
-        # while not self.openlist
-        while not len(self.openlist) == 0:
-            print("******")
+        while len(self.openlist) != 0:
             # First you need to remove the current node from the open array and move it to the closed array
             self.current = self.openlist.pop(0)
             self.closed.append(self.current)
-
-            # print("self.current: " + self.current)
 
             currentTiles = self.current.tile_seq
             current_str = np.array2string(currentTiles, precision=2, separator=" ")
@@ -141,18 +138,8 @@ class UninformedSearchSolver:
                 return "success"
             else:
                 self.state_walk()  # generate the children
-                # for loop print out the content openlist
-            return "fail"
+                currentTiles = self.current.tile_seq
+                current_str = np.array2string(currentTiles, precision=2, separator=" ")
+                print(current_str[1:-1])
 
-        # while not self.current.equals(self.goal):
-        #     print("******")
-        #     # First you need to remove the current node from the open array and move it to the closed array
-        #     self.current = self.openlist.pop(0)
-        #     self.closed.append(self.current)
-        #     print("looping")
-        #     self.state_walk()#generate the children
-        #     #for loop print out the content openlist
-        #     print("!!!!!!!")
-        #
-        # if self.current.equals(self.goal):
-        #     return "success"
+
