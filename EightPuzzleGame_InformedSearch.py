@@ -49,10 +49,13 @@ class InformedSearchSolver:
         # the child is not in open or closed
         if s not in self.openlist or s not in self.closed:
             ret = 1
-        # the child is already in open
-        # return 2
-        # the child is already in closed
-        # return 3
+        # the child is already in open then return 2
+        elif s in in_open:
+            ret = 2
+        # the child is already in closed then return 3
+        elif s in in_closed:
+            ret = 3
+
         return ret
         # TODO your code start here
 
@@ -83,21 +86,24 @@ class InformedSearchSolver:
          tile that needs to be swapped. That being the case, I will only comment the first subroutine"""
         # TODO your code start here
         ### ↑(move up) action ###
-
+        temp_state1 = walk_state.copy()
         if (row - 1) >= 0:
-            temp_state1 = State()
-            temp_state1.tile_seq = walk_state.tile_seq
-            """
-             
-            """
+            """ """
             temp = temp_state1[row - 1, col]
             temp_state1[row - 1, col] = temp_state1[row, col]
             temp_state1[row, col] = temp
-            ret = self.check_inclusive(temp_state1)
-            if ret == 1:
-                temp_state1.depth = self.depth
-                temp_state1.weight = self.heuristic_test(temp_state1)
-                self.openlist.append(temp_state1)
+            state1 = State(temp_state1)
+            ret = self.check_inclusive(state1)
+            if ret == 1:        # the child is not in open or closed
+                state1.depth = self.depth
+                state1.weight = self.heuristic_test(state1)
+                self.openlist.append(state1)
+            # elif ret == 2:      # the child is already in open
+            #     for x, item in enumerate(self.openlist):
+            #         if state1 < self.openlist[x]:
+
+
+
 
             """
              *get the 2d array of current 
@@ -125,52 +131,43 @@ class InformedSearchSolver:
             """
 
         ### ↓(move down) action ###
-        if (row + 1) < 2:
-            temp_state2 = State()
-            temp_state2.tile_seq = walk_state.tile_seq
-            """
-
-            """
+        temp_state2 = walk_state.copy()
+        if (row + 1) <= 2:
             temp = temp_state2[row + 1, col]
             temp_state2[row + 1, col] = temp_state2[row, col]
             temp_state2[row, col] = temp
-            ret = self.check_inclusive(temp_state2)
-            if ret == 1:
-                temp_state2.depth = self.depth
-                temp_state2.weight = self.heuristic_test(temp_state2)
-                self.openlist.append(temp_state2)
+            state2 = State(temp_state2)
+            ret = self.check_inclusive(state2)
+            if ret == 1:            # the child is not in open or closed
+                state2.depth = self.depth
+                state2.weight = self.heuristic_test(state2)
+                self.openlist.append(state2)
 
         ### ←(move left) action ###
+        temp_state3 = walk_state.copy()
         if (col - 1) >= 0:
-            temp_state3 = State()
-            temp_state3.tile_seq = walk_state.tile_seq
-            """
-
-            """
             temp = temp_state3[row, col - 1]
             temp_state3[row, col - 1] = temp_state3[row, col]
             temp_state3[row, col] = temp
-            ret = self.check_inclusive(temp_state3)
-            if ret == 1:
-                temp_state3.depth = self.depth
-                temp_state3.weight = self.heuristic_test(temp_state3)
-                self.openlist.append(temp_state3)
+            state3 = State(temp_state3)
+            ret = self.check_inclusive(state3)
+            if ret == 1:            # the child is not in open or closed
+                state3.depth = self.depth
+                state3.weight = self.heuristic_test(state3)
+                self.openlist.append(state3)
 
         ### →(move right) action ###
-        if (col + 1) < 2:
-            temp_state4 = State()
-            temp_state4.tile_seq = walk_state.tile_seq
-            """
-
-            """
+        temp_state4 = walk_state.copy()
+        if (col + 1) <= 2:
             temp = temp_state4[row, col + 1]
             temp_state4[row, col + 1] = temp_state4[row, col]
             temp_state4[row, col] = temp
-            ret = self.check_inclusive(temp_state4)
-            if ret == 1:
-                temp_state4.depth = self.depth
-                temp_state4.weight = self.heuristic_test(temp_state4)
-                self.openlist.append(temp_state4)
+            state4 = State(temp_state4)
+            ret = self.check_inclusive(state4)
+            if ret == 1:            # the child is not in open or closed
+                state4.depth = self.depth
+                state4.weight = self.heuristic_test(state4)
+                self.openlist.append(state4)
 
         # sort the open list first by h(n) then g(n)
         # Set the next current state
@@ -257,7 +254,9 @@ class InformedSearchSolver:
         self.closed.append(self.current)
 
         while not self.openlist:
+        # while len(self.openlist) != 0:
             if self.current.equals(self.goal):
+                print("Reached Goalllllllll")
                 pass
                 # return the path from the start to current state
             else:

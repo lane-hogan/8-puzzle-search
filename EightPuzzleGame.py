@@ -12,7 +12,7 @@ import numpy as np
 from EightPuzzleGame_State import State
 from EightPuzzleGame_UinformedSearch import UninformedSearchSolver
 
-# from EightPuzzleGame_InformedSearch import InformedSearchSolver
+from EightPuzzleGame_InformedSearch import InformedSearchSolver
 
 
 class EightPuzzleGame:
@@ -42,11 +42,11 @@ class EightPuzzleGame:
 
         self.tiles = 8
 
-        UIS_solver = UninformedSearchSolver(init, goal)
-        UIS_solver.run()
+        # UIS_solver = UninformedSearchSolver(init, goal)
+        # UIS_solver.run()
 
-        # IS_solver = InformedSearchSolver(init, goal)
-        # IS_solver.run()
+        IS_solver = InformedSearchSolver(init, goal)
+        IS_solver.run()
 
 
 # start the puzzle game
