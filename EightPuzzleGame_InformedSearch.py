@@ -168,7 +168,8 @@ class InformedSearchSolver:
 
         # sort the open list first by h(n) then g(n)
         # Set the next current state
-
+        self.openlist.sort(key=lambda state: state.weight)
+        self.current = self.openlist.pop(0)
         # states_path.append(self.current)
         # TODO your code end here
 
@@ -199,6 +200,10 @@ class InformedSearchSolver:
          *loop over the curr_seq
          *check the every entry in curr_seq with goal_seq
         """
+        for i in range(len(curr_seq)):
+            for j in range(len(curr_seq[i])):
+                if curr_seq[i][j] != goal_seq[i][j]:
+                    h1 += 1
         # TODO your code end here
 
         # (2) Sum of distances out of place
@@ -212,6 +217,13 @@ class InformedSearchSolver:
          *of curr_row-goal_row and curr_col-goal_col
          *absoulte value can be calculated by abs(...)
         """
+        for i in range(len(curr_seq)):
+            for j in range(len(curr_seq[i])):
+                for k in range(len(goal_seq)):
+                    for l in range(len(goal_seq[k])):
+                        if curr_seq[i][j] == goal_seq[k][l]:
+                            h2 += abs(i - k) + abs(j - l)
+
         # TODO your code end here
 
         # (3) 2 x the number of direct tile reversals
@@ -231,9 +243,20 @@ class InformedSearchSolver:
          *    4             4
          *reversal is 1 2 and 2 1
         """
+        for row in range(len(curr_seq)):
+            for col in range(len(curr_seq[row])):
+                if row + 1 < len(curr_seq):
+                    if curr_seq[row + 1, col] != 0 and curr_seq[row, col] != 0:
+                        if curr_seq[row + 1, col] == goal_seq[row, col]:
+                            h3 += 1
+                    
+                if col + 1 < len(curr_seq[row]):
+                    if curr_seq[row, col + 1] != 0 and curr_seq[row, col] != 0:
+                        if curr_seq[row, col + 1] == goal_seq[row, col]:
+                            h3 += 1
 
         # update the heuristic value for current state
-
+        self.current.weight = h1 + h2 + h3 + current.depth
         # TODO your code end here
 
     # You can change the following code to print all the states on the search path
@@ -251,7 +274,6 @@ class InformedSearchSolver:
         self.closed.append(self.current)
 
         while not self.openlist:
-            # while len(self.openlist) != 0:
             if self.current.equals(self.goal):
                 print("Reached Goalllllllll")
                 pass
